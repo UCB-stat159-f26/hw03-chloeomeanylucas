@@ -2,7 +2,7 @@ library(rvest)
 library(tidyverse)
 library(lubridate)
 
-name = "MirraAndreeva"
+name = "RodLaver"
 
 url = paste0("https://www.tennisabstract.com/cgi-bin/wplayer-classic.cgi?p=", name, "&f=ACareerqq")
 
@@ -14,25 +14,17 @@ js_urls = html_webpage %>%
   html_attr("src")
 
 career_url = js_urls[str_detect(js_urls, pattern = "Career")]
-
-#I can get the ...<FirstLast>.js and the ...<FirstLast>Career.js from same webpage
 player_url = js_urls[str_detect(js_urls, pattern = paste0(name, "(?!Career)"))]
 
 player_data = readLines(player_url)
 career_data = readLines(career_url)
 
-
+length(str_view(career_data, pattern = "[:digit:]{2}\\.[:digit:]+")) == 0
 
 date_of_match = str_extract(career_data, pattern = "\\d{8}")
 
 #removes NA values
 date_of_match = date_of_match[!is.na(date_of_match)]
-
-
-#this includes only the date of the match and opponents' birthdays
-all_dates = str_extract_all(career_data, pattern = "\\d{8}(?!\\-)")
-
-
 
 #this retrieves every even number of the array of dates
 #An even number corresponds to opponents' dates of birth and odd numbers correspond to date of match
@@ -44,8 +36,22 @@ all_dates = str_extract_all(career_data, pattern = "\\d{8}(?!\\-)")
 #I might need to keep track of which dates I don't include because the opponent's birthday is missing
 #so then I omit these dates when calculating for the player's intervals
 
+#Mens' Opponents' Ages----------------------------------------------------------
+opp_ages = str_extract(career_data, pattern = "[:digit:]{2}\\.[:digit:]+")
+career_data[str_detect(career_data, pattern = "[:digit:]{2}\\.[:digit:]+") == FALSE]
 
-#Opponents' Birthdays-----------------------------------------------------------
+#removes NA values
+opp_ages = opp_ages[!is.na(opp_ages)]
+
+#okay, problem, there are also some missing ages
+length(opp_ages)
+length(date_of_match)
+
+
+#Womens' Opponents' Birthdays-----------------------------------------------------------
+#this includes only the date of the match and opponents' birthdays
+all_dates = str_extract_all(career_data, pattern = "\\d{8}(?!\\-)")
+
 opponent_bdays = c()
 unincluded_index = c()
 for (i in 1:length(all_dates)){
