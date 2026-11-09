@@ -97,8 +97,6 @@ function (name) {
   #new pattern: '(?<=\")([:upper:]{1,2}|[:upper:][:digit:])(?![:alpha:]|[:digit:])'
   #i feel like i would have less hard of a time if this was a .csv file
 
-  print(str_view(career_data, pattern = '(?<=\")(W|L)(?=\")'), n = 143)
-
   career_table = data.frame(
     "Date" = date_of_match,
     "Player_Age" = player_ages,
