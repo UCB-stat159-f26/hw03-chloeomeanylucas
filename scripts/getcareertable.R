@@ -38,12 +38,16 @@ getcareertable = function (name) {
     #output of getmensoppsages() is a list
     opp_ages = getmensoppsages.R(name)$OppAges
     unincluded_index = getmensoppsages.R(name)$Indices
-    date_of_match = date_of_match[-unincluded_index] #Removing the dates that correspond to the opponents with missing ages
+    if (length(unincluded_index) != 0){ #making sure unincluded_index is NOT empty
+      date_of_match = date_of_match[-unincluded_index] #Removing the dates that correspond to the opponents with missing birthdays
+    }
   } else {
     #output of getwomensoppsbdays() is a list
     opp_bdays = getwomensoppsbdays(name)$OppBdays
     unincluded_index = getwomensoppsbdays(name)$Indices
-    date_of_match = date_of_match[-unincluded_index] #Removing the dates that correspond to the opponents with missing birthdays
+    if (length(unincluded_index) != 0){ #making sure unincluded_index is NOT empty
+     date_of_match = date_of_match[-unincluded_index] #Removing the dates that correspond to the opponents with missing birthdays
+    }
     opp_age_intervals = interval(ymd(opps_bdays), ymd(date_of_match))
     opp_ages = time_length(opp_age_intervals, "year")
   }
@@ -69,6 +73,7 @@ getcareertable = function (name) {
     }
   }
 
+
   #Player Age and Difference of Ages----------------------------------------------------
   #interval() from the package lubridate returns an array of UTC formatted intervals
   #where one value looks like: YYYY-MM-DD UTC--YYYY-MM-DD UTC
@@ -85,15 +90,16 @@ getcareertable = function (name) {
 
   #Outcomes-----------------------------------------------------------------------
   #In order to find if the player won or not, str_extract detects the first occurrence of
-  #a W or L wrapped in quotation marks
+  #a W or L wrapped in quotation marks. A "W" for "won" and "L" for "lost."
   outcomes = str_extract(career_data, pattern = '(?<=\")(W|L)(?=\")')
 
   #removes NA values
   outcomes = outcomes[!is.na(outcomes)]
 
   #removing outcome(s) that correspond to the index of the opponent(s) with a missing birthday or age
-  #!!!!!WARNING if i just run this one line again over and over it will continue to remove those indices
-  outcomes = outcomes[-unincluded_index]
+  if (length(unincluded_index) != 0){ #making sure unincluded_index is NOT empty
+    outcomes = outcomes[-unincluded_index]
+  }
 
 
   #Crafting a Table of the Player's Career--------------------------------------
