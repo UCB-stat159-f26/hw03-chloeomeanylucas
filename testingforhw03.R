@@ -36,12 +36,30 @@ date_of_match = date_of_match[!is.na(date_of_match)]
 #I might need to keep track of which dates I don't include because the opponent's birthday is missing
 #so then I omit these dates when calculating for the player's intervals
 
+#Okay, I need to (1) filter which type of data set I am working with (2) create a
+#for loop to track unincluded indices for missing data and retrieve opponents' ages
+
 #Mens' Opponents' Ages----------------------------------------------------------
-opp_ages = str_extract(career_data, pattern = "[:digit:]{2}\\.[:digit:]+")
+#using str_extract_all so that I can index through the list
+all_opp_ages = str_extract_all(career_data, pattern = "[:digit:]{2}\\.[:digit:]+")
+
+opp_ages = c()
+unincluded_index = c()
+for (i in 1:length(all_opp_ages)){
+  if (length(all_opp_ages[[i]]) == 0){ #skips if list item in all_dates contains character(0) (empty string)
+    unincluded_index = append(unincluded_index, i) #but keeps track of indices to omit in date_of_match and all_outcomes
+    next
+  } else {
+    opp_ages = append(opp_ages, all_opp_ages[[i]]) #appends i-th opponent's birthday
+  }
+}
+
+str_view(career_data, pattern = "[:digit:]{2}\\.[:digit:]+")
 career_data[str_detect(career_data, pattern = "[:digit:]{2}\\.[:digit:]+") == FALSE]
 
+
 #removes NA values
-opp_ages = opp_ages[!is.na(opp_ages)]
+#opp_ages = opp_ages[!is.na(opp_ages)]
 
 #okay, problem, there are also some missing ages
 length(opp_ages)
