@@ -56,24 +56,6 @@ getcareertable = function (name) {
   #calculations. Please refer to the README.md for more explanation.
 
 
-  #Opponents' Birthdays---------------------------------------------------------
-  #this includes only the date of the match and opponents' birthdays
-  all_dates = str_extract_all(career_data, pattern = "\\d{8}(?!\\-)")
-
-  opp_bdays = c()
-  unincluded_index = c()
-  for (i in 1:length(all_dates)){
-    if (length(all_dates[[i]]) == 0){ #skips if list item in all_dates contains character(0) (empty string)
-      next
-    } else if (length(all_dates[[i]]) < 2){ #skips if i-th opponent's birthday is missing
-      unincluded_index = append(unincluded_index, i) #but keeps track of indices to omit in date_of_match and all_outcomes
-      next
-    } else {
-      opp_bdays = append(opp_bdays, all_dates[[i]][2]) #appends i-th opponent's birthday
-    }
-  }
-
-
   #Player Age and Difference of Ages----------------------------------------------------
   #interval() from the package lubridate returns an array of UTC formatted intervals
   #where one value looks like: YYYY-MM-DD UTC--YYYY-MM-DD UTC
