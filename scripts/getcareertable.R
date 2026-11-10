@@ -4,7 +4,7 @@ library(lubridate)
 
 #argument <name> is the full name of the player in the format: FirstLast
 
-function (name) {
+getcareertable = function (name) {
   js_urls = getcareerdatafromweb(name)
 
   career_url = js_urls[str_detect(js_urls, pattern = "Career")]
@@ -22,35 +22,6 @@ function (name) {
   #removes NA values
   date_of_match = date_of_match[!is.na(date_of_match)]
 
-  #this includes only the date of the match and opponents' birthdays
-  all_dates = str_extract_all(career_data, pattern = "\\d{8}(?!\\-)")
-
-  #!!!major problem: some of the opponents' birth years are missing...
-
-  #I think my strategy is just going to omit the players that don't have their birthdays recorded
-  #I might need to keep track of which dates I don't include because the opponent's birthday is missing
-  #so then I omit these dates when calculating for the player's intervals
-
-
-  #Opponents' Birthdays-----------------------------------------------------------
-  opponent_bdays = c()
-  unincluded_index = c()
-  for (i in 1:length(all_dates)){
-    if (length(all_dates[[i]]) == 0){ #skips if list item in all_dates contains character(0) (empty string)
-      next
-    } else if (length(all_dates[[i]]) < 2){ #skips if i-th opponent's birthday is missing
-      unincluded_index = append(unincluded_index, i) #but keeps track of indices to omit in date_of_match and all_outcomes
-      next
-    } else {
-      opponent_bdays = append(opponent_bdays, all_dates[[i]][2]) #appends i-th opponent's birthday
-    }
-  }
-
-  #REMOVAL------------------------------------------------------------------------
-  #Removing the dates that correspond to the opponents with missing birthdays in all_dates
-  #I need date_of_match and opponent_bdays to be the same length
-  date_of_match = date_of_match[-unincluded_index]
-
 
   #Player's Birthday--------------------------------------------------------------
   #This extracts the player's birthday. It is a character vector of NA values and
@@ -60,17 +31,52 @@ function (name) {
   #removes the NA values that come from str_extract()
   player_bday = player_bday[!is.na(player_bday)]
 
+  #Male or Female Player--------------------------------------------------------
+  #this checks if the player is a man by checking if the player's career data has
+  #ages instead of birthdays for their opponents
+  if (length(str_view(career_data, pattern = "[:digit:]{2}\\.[:digit:]+")) == 0){
+    #output of getmensoppsages() is a list
+    opp_ages = getmensoppsages.R(name)$OppAges
+    unincluded_index = getmensoppsages.R(name)$Indices
+    date_of_match = date_of_match[-unincluded_index] #Removing the dates that correspond to the opponents with missing ages
+  } else {
+    #output of getwomensoppsbdays() is a list
+    opp_bdays = getwomensoppsbdays(name)$OppBdays
+    unincluded_index = getwomensoppsbdays(name)$Indices
+    date_of_match = date_of_match[-unincluded_index] #Removing the dates that correspond to the opponents with missing birthdays
+    opp_age_intervals = interval(ymd(opps_bdays), ymd(date_of_match))
+    opp_ages = time_length(opp_age_intervals, "year")
+  }
+  #in the above if-else statement, the variable unincluded_index is tracked so that I can
+  #remove the opponents that did not have an age or birthday in the data in further
+  #calculations. Please refer to the README.md for more explanation.
 
-  #Ages and Difference of Ages----------------------------------------------------
+
+  #Opponents' Birthdays---------------------------------------------------------
+  #this includes only the date of the match and opponents' birthdays
+  all_dates = str_extract_all(career_data, pattern = "\\d{8}(?!\\-)")
+
+  opp_bdays = c()
+  unincluded_index = c()
+  for (i in 1:length(all_dates)){
+    if (length(all_dates[[i]]) == 0){ #skips if list item in all_dates contains character(0) (empty string)
+      next
+    } else if (length(all_dates[[i]]) < 2){ #skips if i-th opponent's birthday is missing
+      unincluded_index = append(unincluded_index, i) #but keeps track of indices to omit in date_of_match and all_outcomes
+      next
+    } else {
+      opp_bdays = append(opp_bdays, all_dates[[i]][2]) #appends i-th opponent's birthday
+    }
+  }
+
+  #Player Age and Difference of Ages----------------------------------------------------
   #interval() from the package lubridate returns an array of UTC formatted intervals
   #where one value looks like: YYYY-MM-DD UTC--YYYY-MM-DD UTC
-  #these are "doubles"
-  opp_age_intervals = interval(ymd(opponent_bdays), ymd(date_of_match))
+  #they are "doubles"
   player_age_intervals = interval(ymd(player_bday), ymd(date_of_match))
 
   #time_length() calculates the length of time between a player's birthday and
   #the match date in units of "years"
-  opp_ages = time_length(opp_age_intervals, "year")
   player_ages = time_length(player_age_intervals, "year")
 
   #difference in ages relative to player's age on the date of the match
@@ -80,23 +86,17 @@ function (name) {
   #Outcomes-----------------------------------------------------------------------
   #In order to find if the player won or not, str_extract detects the first occurrence of
   #a W or L wrapped in quotation marks
-  #all_outcomes = str_extract_all(career_data, pattern = '(?<=\")(G|W|L|I|O|D|P|PM|F|T2|T1|T3|T4)(?![:alpha:])')
-
-  #!!!I can't really know if this is right for every line unless I manually check it
   outcomes = str_extract(career_data, pattern = '(?<=\")(W|L)(?=\")')
 
   #removes NA values
   outcomes = outcomes[!is.na(outcomes)]
 
-
-  #REMOVAL------------------------------------------------------------------------
-  #removing outcome(s) that corresponds to the index of the opponent(s) with a missing birthday in all_dates
+  #removing outcome(s) that correspond to the index of the opponent(s) with a missing birthday or age
   #!!!!!WARNING if i just run this one line again over and over it will continue to remove those indices
   outcomes = outcomes[-unincluded_index]
 
-  #new pattern: '(?<=\")([:upper:]{1,2}|[:upper:][:digit:])(?![:alpha:]|[:digit:])'
-  #i feel like i would have less hard of a time if this was a .csv file
 
+  #Crafting a Table of the Player's Career--------------------------------------
   career_table = data.frame(
     "Date" = date_of_match,
     "Player_Age" = player_ages,
