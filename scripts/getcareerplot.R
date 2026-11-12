@@ -3,10 +3,10 @@ library(tidyverse)
 #not sure if i need to include the libraries used in the other scripts
 
 
-#argument <name> is the full name of the player in the format: FirstLast
+#argument <table> is the data frame obtained from getcareertable() function
 
-getcareerplot = function (name){
-  data = getcareertable(name)
+getcareerplot = function (table){
+  data = table
 
   first_name = unlist(str_split(name, "(?<=[a-z])(?=[A-Z])"))[1]
   last_name = unlist(str_split(name, "(?<=[a-z])(?=[A-Z])"))[2]
