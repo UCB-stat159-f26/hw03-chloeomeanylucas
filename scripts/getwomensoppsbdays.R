@@ -1,3 +1,11 @@
+#' @title The Birthdays of a Female Player's Opponents
+#' @description Retrieves the birthdays of the female player's opponents and indices of missing data to omit for future calculations
+#' @param name the name of the professional tennis player in the format: FirstLast
+#' @return a 2-item list containing a vector of the opponents' birthdays and a vector of the indices that were missing an opponent's birthday in the data
+#' @examples
+#' name = "SerenaWilliams"
+#' getwomensoppsbdays(name)
+
 library(rvest)
 library(tidyverse)
 library(lubridate)

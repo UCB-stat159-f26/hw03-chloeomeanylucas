@@ -1,7 +1,16 @@
+#' @title Career Data from Tennis Abstract
+#' @description Retrieves the .js files embedded in the Tennis Abstract summary of a professional tennis player's career
+#' @param name the name of the professional tennis player in the format: FirstLast
+#' @return a character vector of all .js urls
+#' @examples
+#' name = "SerenaWilliams
+#' getcareerdatafromweb(name)
+#'
+#' name = "RodLaver"
+#' getcareerdatafromweb(name)
+
 library(rvest)
 library(tidyverse)
-
-#argument <name> is the full name of the player in the format: FirstLast
 
 getcareerdatafromweb = function (name) {
   url = paste0("https://www.tennisabstract.com/cgi-bin/wplayer-classic.cgi?p=", name, "&f=ACareerqq")

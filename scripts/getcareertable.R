@@ -1,3 +1,15 @@
+#' @title Table of a Tennis Player's Career with Player's Age vs. Opponent's Age
+#' @description Creates a data frame with columns of the date of the tennis match, the player's age, the opponent's age, the difference between the ages, and "W" or "L" for whether the player "won" or "lost"
+#' @param name the name of the professional tennis player in the format: FirstLast
+#' @return a data frame with five columns
+#' @examples
+#' name = SerenaWilliams
+#' getcareertable(name)
+#'
+#' name = "RodLaver"
+#' getcareertable(name)
+
+
 library(rvest)
 library(tidyverse)
 library(lubridate)
