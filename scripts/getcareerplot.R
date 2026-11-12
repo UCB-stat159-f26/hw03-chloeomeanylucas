@@ -1,17 +1,32 @@
+#' @title Scatter plot of Player's Career And Age Difference Between Opponent
+#' @description Using the data frame obtained from getcareertable() function, this plots a scatter plot of all matches a player has won or lost in their career, and their age relative to their opponents each match.
+#' @param table the data frame obtained from getcareertable() function
+#' @param name optional parameter to include the player's name on the scatter plot title and axis. Default is "PlayerName." Name should be formatted as: FirstLast
+#' @return a scatter plot of the difference of the players age relative to their opponents, color-coded by whether the player won or lost
+#' @examples
+#' name = "SerenaWilliams"
+#' williams_tbl = getcareertable(name)
+#' getcareerplot(williams_tbl)
+#'
+#' name = "SerenaWilliams"
+#' williams_tbl = getcareertable(name)
+#' getcareerplot(williams_tbl, "SerenaWilliams")
+#' getcareerplot(williams_tbl, name)
+#'
+#' name = "RodLaver"
+#' laver_tbl =  getcareertable(name)
+#' getcareerplot(laver_tbl)
+
+
+
 library(ggplot2)
 library(tidyverse)
-#not sure if i need to include the libraries used in the other scripts
 
-
-#argument <table> is the data frame obtained from getcareertable() function
-
-getcareerplot = function (table){
-  data = table
-
+getcareerplot = function (table, name = "PlayerName"){
   first_name = unlist(str_split(name, "(?<=[a-z])(?=[A-Z])"))[1]
   last_name = unlist(str_split(name, "(?<=[a-z])(?=[A-Z])"))[2]
 
-  plot = ggplot(data = data, mapping = aes(x = Player_Age, y = Age_Difference, color = Player_Outcome))+
+  plot = ggplot(data = table, mapping = aes(x = Player_Age, y = Age_Difference, color = Player_Outcome))+
   geom_point(size = 0.7) +
   labs(
     title = paste0(first_name, " ", last_name,"'s Professional Matches"),
