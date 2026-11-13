@@ -1,4 +1,5 @@
 #' @title Scatter plot of Player's Career And Age Difference Between Opponent
+#' @name getcareerplot
 #' @description Using the data frame obtained from getcareertable() function, this plots a scatter plot of all matches a player has won or lost in their career, and their age relative to their opponents each match.
 #' @param table the data frame obtained from getcareertable() function
 #' @param name optional parameter to include the player's name on the scatter plot title and axis. Default is "PlayerName." Name should be formatted as: FirstLast

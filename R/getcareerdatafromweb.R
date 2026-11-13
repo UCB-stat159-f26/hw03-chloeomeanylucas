@@ -1,4 +1,5 @@
 #' @title Career Data from Tennis Abstract
+#' @name getcareerdatafromweb
 #' @description Retrieves the .js files embedded in the Tennis Abstract summary of a professional tennis player's career
 #' @param name the name of the professional tennis player in the format: FirstLast
 #' @return a character vector of all .js urls

@@ -1,4 +1,5 @@
 #' @title The Ages of a Male Player's Opponents
+#' @name getmensoppsages
 #' @description Retrieves the ages of the male player's opponents and indices of missing data to omit for future calculations
 #' @param name the name of the professional tennis player in the format: FirstLast
 #' @return a 2-item list containing a vector of the opponents' ages and a vector of the indices that were missing an opponent's age in the data
