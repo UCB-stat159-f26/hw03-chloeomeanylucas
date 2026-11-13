@@ -1,0 +1,43 @@
+Columns:
+
+(1)
+Name: "Date"
+Full name: "Date of Match"
+Description: This is the date of the tennis match in the format: YYYYMMDD
+Data type: String or character
+Missing Values: No missing values (NA values and empty strings have been removed)
+Comments: NA
+
+(2)
+Name: "Player_Age"
+Full name: "Player's Age"
+Description: The professional tennis player's age on the match date.
+Data type: Double
+Missing Values: No missing values (NA values and empty strings have been removed)
+Comments: Ages are not rounded to the nearest whole number.
+
+(3)
+Name: "Opponent_Age"
+Full name: "Opponent's Age"
+Description: The professional tennis player's opponent's age on the match date.
+Data type: Double
+Missing Values: No missing values (NA values and empty strings have been removed)
+Comments: Ages are not rounded to the nearest whole number.
+
+(4)
+Name: "Age_Difference"
+Full name: "Age Difference"
+Description: The difference of the tennis player's age and their opponent's age on the match date. 
+Data type: Double
+Missing Values: No missing values (NA values and empty strings have been removed)
+Comments: Positive values mean that player is older than their opponent, and negative values mean the player is younger than their opponent.
+
+(5) 
+Name: "Player_Outcome"
+Full name: "Match Outcome for Player"
+Description: A binary value of "W" or "L" for whether the tennis player "won" or "lost" the match that day. 
+Data type: String or character
+Missing values: If a "W" or "L" is missing from the data, then missing values will be an empty string.
+Comments: NA
+
+
