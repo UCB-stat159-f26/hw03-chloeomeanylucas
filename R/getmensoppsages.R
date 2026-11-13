@@ -9,7 +9,7 @@
 #' getmensoppsages(name)
 
 library(rvest)
-library(tidyverse)
+library(stringr)
 
 
 getmensoppsages = function (name){
@@ -30,7 +30,7 @@ getmensoppsages = function (name){
       unincluded_index = append(unincluded_index, i) #but keeps track of indices to omit from future calculations
       next
     } else {
-      opp_ages = append(opp_ages, all_opp_ages[[i]]) #appends i-th opponent's birthday
+      opp_ages = append(opp_ages, as.double(all_opp_ages[[i]])) #appends i-th opponent's birthday (type = double)
     }
   }
 
