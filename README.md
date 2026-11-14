@@ -72,21 +72,26 @@ I used R as my main coding language. Here is a helpful
 for its user-friendly interface, but it is not necessary for the code to
 run. If you would like to install RStudio, here is a
 [guide](https://rstudio-education.github.io/hopr/starting.html#rstudio)
-on how to do so. - R - version: 4.4.2 - RStudio - version: 2024.12.0.467
+on how to do so.
+
+- R - version: 4.4.2
+  - RStudio - version: 2024.12.0.467
 
 ### R packages used
 
 Press on the name of the package for more information on the commands
-and contents. -
-[ggplot2](https://ggplot2.tidyverse.org/articles/ggplot2.html) (for data
-visualization) - version: 4.0.3 -
-[lubridate](https://lubridate.tidyverse.org/) (for working with dates) -
-version: 1.9.5 -
-[stringr](https://rstudio.github.io/cheatsheets/html/strings.html) (for
-working with character strings) - version: 1.6.0 -
-[rvest](https://rvest.tidyverse.org/) (for html extraction) - version:
-1.0.5 - [httr2](https://httr2.r-lib.org/) (for working with web APIs) -
-version 1.2.2
+and contents.
+
+- [ggplot2](https://ggplot2.tidyverse.org/articles/ggplot2.html) (for
+  data visualization) - version: 4.0.3
+- [lubridate](https://lubridate.tidyverse.org/) (for working with
+  dates) - version: 1.9.5
+- [stringr](https://rstudio.github.io/cheatsheets/html/strings.html)
+  (for working with character strings) - version: 1.6.0
+- [rvest](https://rvest.tidyverse.org/) (for html extraction) - version:
+  1.0.5
+- [httr2](https://httr2.r-lib.org/) (for working with web APIs) -
+  version 1.2.2
 
 ## Installation of Package
 
