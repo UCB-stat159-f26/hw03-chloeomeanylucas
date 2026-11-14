@@ -5,7 +5,7 @@
 #' @return a data frame with five columns
 #' @export
 #' @examples
-#' name = SerenaWilliams
+#' name = "SerenaWilliams"
 #' getcareertable(name)
 #'
 #' name = "RodLaver"
@@ -19,13 +19,10 @@ library(lubridate)
 #argument <name> is the full name of the player in the format: FirstLast
 
 getcareertable = function (name) {
-  js_urls = getcareerdatafromweb(name)
+  data_list = getcareerdatafromweb(name)
 
-  career_url = js_urls[str_detect(js_urls, pattern = "Career")]
-  player_url = js_urls[str_detect(js_urls, pattern = paste0(name, "(?!Career)"))]
-
-  player_data = readLines(player_url)
-  career_data = readLines(career_url)
+  player_data = data_list$P
+  career_data = data_list$C
 
 
   #Dates-----------------------------------------------------------------------
@@ -48,10 +45,10 @@ getcareertable = function (name) {
   #Male or Female Player--------------------------------------------------------
   #this checks if the player is a man by checking if the player's career data has
   #ages instead of birthdays for their opponents
-  if (length(str_view(career_data, pattern = "[:digit:]{2}\\.[:digit:]+")) == 0){
+  if (length(str_view(career_data, pattern = "[:digit:]{2}\\.[:digit:]+")) != 0){
     #output of getmensoppsages() is a list
-    opp_ages = getmensoppsages.R(name)$OppAges
-    unincluded_index = getmensoppsages.R(name)$Indices
+    opp_ages = getmensoppsages(name)$OppAges
+    unincluded_index = getmensoppsages(name)$Indices
     if (length(unincluded_index) != 0){ #making sure unincluded_index is NOT empty
       date_of_match = date_of_match[-unincluded_index] #Removing the dates that correspond to the opponents with missing birthdays
     }
@@ -62,7 +59,7 @@ getcareertable = function (name) {
     if (length(unincluded_index) != 0){ #making sure unincluded_index is NOT empty
      date_of_match = date_of_match[-unincluded_index] #Removing the dates that correspond to the opponents with missing birthdays
     }
-    opp_age_intervals = interval(ymd(opps_bdays), ymd(date_of_match))
+    opp_age_intervals = interval(ymd(opp_bdays), ymd(date_of_match))
     opp_ages = time_length(opp_age_intervals, "year")
   }
   #in the above if-else statement, the variable unincluded_index is tracked so that I can
