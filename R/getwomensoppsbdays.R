@@ -8,9 +8,6 @@
 #' name = "SerenaWilliams"
 #' getwomensoppsbdays(name)
 
-library(rvest)
-library(stringr)
-library(lubridate)
 
 getwomensoppsbdays = function (name){
   data_list = getcareerdatafromweb(name)
@@ -18,7 +15,7 @@ getwomensoppsbdays = function (name){
   career_data = data_list$C
 
   #this includes only the date of the match and opponents' birthdays
-  all_dates = str_extract_all(career_data, pattern = "\\d{8}(?!\\-)")
+  all_dates = stringr::str_extract_all(career_data, pattern = "\\d{8}(?!\\-)")
 
   opp_bdays = c()
   unincluded_index = c()
