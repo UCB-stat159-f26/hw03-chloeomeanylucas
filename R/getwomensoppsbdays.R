@@ -9,7 +9,7 @@
 #' getwomensoppsbdays(name)
 
 library(rvest)
-library(tidyverse)
+library(stringr)
 library(lubridate)
 
 getwomensoppsbdays = function (name){

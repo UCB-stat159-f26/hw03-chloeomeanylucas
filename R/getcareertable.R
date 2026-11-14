@@ -13,7 +13,7 @@
 
 
 library(rvest)
-library(tidyverse)
+library(stringr)
 library(lubridate)
 
 #argument <name> is the full name of the player in the format: FirstLast

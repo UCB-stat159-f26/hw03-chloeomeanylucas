@@ -22,7 +22,7 @@
 
 
 library(ggplot2)
-library(tidyverse)
+library(stringr)
 
 getcareerplot = function (table, name = "PlayerName"){
   first_name = unlist(str_split(name, "(?<=[a-z])(?=[A-Z])"))[1]

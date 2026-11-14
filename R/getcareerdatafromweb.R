@@ -12,7 +12,7 @@
 #' getcareerdatafromweb(name)
 
 library(rvest)
-library(tidyverse)
+library(stringr)
 
 getcareerdatafromweb = function (name) {
   url = paste0("https://www.tennisabstract.com/cgi-bin/wplayer-classic.cgi?p=", name, "&f=ACareerqq")
