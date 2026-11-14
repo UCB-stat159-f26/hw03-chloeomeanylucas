@@ -2,11 +2,13 @@ library(rvest)
 library(tidyverse)
 library(lubridate)
 
-name = "BenShelton"
+name = "JohnSmith"
 
 url = paste0("https://www.tennisabstract.com/cgi-bin/wplayer-classic.cgi?p=", name, "&f=ACareerqq")
 
 html_webpage = read_html(url)
+html_webpage
+url
 
 #searching for the "src" url in <script></script>
 js_urls = html_webpage %>%
@@ -16,8 +18,21 @@ js_urls = html_webpage %>%
 career_url = js_urls[str_detect(js_urls, pattern = "Career")]
 player_url = js_urls[str_detect(js_urls, pattern = paste0(name, "(?!Career)"))]
 
+server_response <- httr2::request(career_url) %>%
+  httr2::req_error(is_error = function(resp) FALSE) %>%
+  httr2::req_perform()
+
 player_data = readLines(player_url)
 career_data = readLines(career_url)
+
+l = list(
+  P = player_data,
+  C = career_data
+)
+
+
+length(str_view(career_data, pattern = "[:digit:]{2}\\.[:digit:]+")) !=0
+
 
 length(str_view(career_data, pattern = "[:digit:]{2}\\.[:digit:]+")) == 0
 
