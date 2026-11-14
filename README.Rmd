@@ -27,6 +27,7 @@ This package contains two main functions: `getcareertable()` and `getcareerplot(
 `
 getcareertable()
 `
+
 - A data frame containing five columns:
     - "Date"
     - "Player_Age"

@@ -18,8 +18,14 @@ their career.
 This package contains two main functions: `getcareertable()` and
 `getcareerplot()`
 
-`getcareertable()` - A data frame containing five columns: - “Date” -
-“Player_Age” - “Opponent_Age” - “Age_Difference” - “Player_Outcome”
+`getcareertable()`
+
+- A data frame containing five columns:
+  - “Date”
+  - “Player_Age”
+  - “Opponent_Age”
+  - “Age_Difference”
+  - “Player_Outcome”
 
 *for more information, see `getcareertable_DICTIONARY.txt` in /R/
 folder*
