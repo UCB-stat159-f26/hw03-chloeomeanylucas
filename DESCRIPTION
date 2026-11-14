@@ -1,9 +1,9 @@
 Package: tennisplayercareer
-Title: What the Package Does (One Line, Title Case)
+Title: Representing a Tennis Player's Career and Comparing Their Age to Their Opponents
 Version: 0.1.0
 Authors@R: 
 	person("Chloe", "O'Meany-Lucas", email = "chloe.jxix@gmail.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Description: This package extracts a professional tennis player's from Tennis Abstract and creates a table and plot. The table is used to create a plot that shows a timeline of the player's wins and losses throughout their career, as well as the age they were compared to their opponent's on the day of the match.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
