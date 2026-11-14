@@ -2,7 +2,7 @@ library(rvest)
 library(tidyverse)
 library(lubridate)
 
-name = "RodLaver"
+name = "BenShelton"
 
 url = paste0("https://www.tennisabstract.com/cgi-bin/wplayer-classic.cgi?p=", name, "&f=ACareerqq")
 
@@ -50,10 +50,13 @@ for (i in 1:length(all_opp_ages)){
     unincluded_index = append(unincluded_index, i) #but keeps track of indices to omit in date_of_match and all_outcomes
     next
   } else {
-    opp_ages = append(opp_ages, all_opp_ages[[i]]) #appends i-th opponent's birthday
+    opp_ages = append(opp_ages, as.double(all_opp_ages[[i]])) #appends i-th opponent's birthday
   }
 }
 
+typeof(opp_ages)
+player_ages
+opp_ages
 str_view(career_data, pattern = "[:digit:]{2}\\.[:digit:]+")
 career_data[str_detect(career_data, pattern = "[:digit:]{2}\\.[:digit:]+") == FALSE]
 
@@ -143,3 +146,20 @@ career_table = data.frame(
   "Age_Difference" = age_diff,
   "Player_Outcome" = outcomes
 )
+
+colnames(career_table) %in% c("Date", "Player_Age", "Opponent_Age", "Age_Difference", "Player_Outcome")
+
+length(career_table) == 5
+
+lapply(career_table, nrow())
+nrow(career_table)
+
+length(unique(lapply(career_table, length))) == 1
+
+sum(sapply(career_table, is.na)) == 0
+
+sum(is.na(career_table)
+
+sapply(career_table, typeof)
+
+
