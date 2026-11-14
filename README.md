@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# 
+# HW 3 Plotting a Tennis Player’s Career from Tennis Abstract
 
 <!-- #region -->
 
@@ -30,13 +30,15 @@ This package contains two main functions: `getcareertable()` and
 *for more information, see `getcareertable_DICTIONARY.txt` in /R/
 folder*
 
-`getcareertable()` - A scatter plot of all matches a professional tennis
-player has won or lost in their career, and their age relative to their
-opponents each match. The layout of the plot is directly influenced by
-the one created for Serena Williams in the New York Times article
-[“Serena Williams Dominated Her Generation, Then the Next One,
-Too.”](https://www.nytimes.com/interactive/2022/08/28/sports/tennis/serena-age-opponents.html)
-by Leo Dominguez and Sara Ziegler.
+`getcareertable()`
+
+- A scatter plot of all matches a professional tennis player has won or
+  lost in their career, and their age relative to their opponents each
+  match. The layout of the plot is directly influenced by the one
+  created for Serena Williams in the New York Times article [“Serena
+  Williams Dominated Her Generation, Then the Next One,
+  Too.”](https://www.nytimes.com/interactive/2022/08/28/sports/tennis/serena-age-opponents.html)
+  by Leo Dominguez and Sara Ziegler.
 
 ## File Structure
 
@@ -49,12 +51,17 @@ by Leo Dominguez and Sara Ziegler.
     |   |── getwomensoppsbdays.R              # auxiliary function
     |── .Rbuildignore
     |── .gitignore
-    |── DESCRIPTION
+    |── DESCRIPTION                           # package metadata
     |── LICENSE
     |── LICENSE.md
     |── NAMESPACE
-    |── instructions.md
+    |── README.Rmd                            # R markdown script that generates README.md
+    |── README.md
+    |── instructions.md                       # instructions for this assignment given by UC Berkeley Stat 159 Fall 2026 
     |── tennisplayercareer.Rproj
+
+***for more information on the auxiliary functions, see the /man/
+folder***
 
 ## Dependencies
 
@@ -78,7 +85,8 @@ version: 1.9.5 -
 [stringr](https://rstudio.github.io/cheatsheets/html/strings.html) (for
 working with character strings) - version: 1.6.0 -
 [rvest](https://rvest.tidyverse.org/) (for html extraction) - version:
-1.0.5
+1.0.5 - [httr2](https://httr2.r-lib.org/) (for working with web APIs) -
+version 1.2.2
 
 ## Installation of Package
 
@@ -86,30 +94,13 @@ You can install the development version of tennisplayercareer from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("pak")
 pak::pak("UCB-stat159-f26/hw03-chloeomeanylucas")
 ```
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
-<!-- #endregion -->
-
-``` r
-
-## basic example code
-```
-
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+Below are examples of how to use the main functions, as well as what the
+auxiliary functions do: <!-- #endregion -->
 
 ## Special Considerations
 
@@ -136,3 +127,27 @@ files, so they display on GitHub and CRAN.
   data in different ways.
 
 ## Reflection
+
+### Translation
+
+- The hardest part of this project had been translating the code I had
+  created to replicate the New York Times plot of Serena Williams’s
+  career for this project. That code is under the repository
+  `UCB-stat159-f26/hw02-chloeomeanylucas` on GitHub. When I cleaned the
+  data, I tailored all steps directly to the composition of the data.
+  For example, when I wanted to remove an empty row, I used a negative
+  index. For this project, I instead used `[!is.na()]` which is much
+  more widely applicable to any length of data. It made me question
+  whether I had been too narrow with my pipeline for plotting Williams’
+  career, and how I might improve this in future projects.
+
+### Missing Data
+
+- I realized halfway through creating my functions that there was
+  missing data, for both male and female player’s datasets from Tennis
+  Abstract. I then had to check what had changed along my entire
+  pipeline, omit the appropriate lines of data, and then try to see if
+  it worked with different players. It was a tedious process, and it
+  added more and more lines to my code. It is important, however,
+  because I don’t think the calculations could handle empty strings or
+  NA values.
