@@ -24,6 +24,24 @@ getcareerdatafromweb = function (name) {
     html_elements("script[src]") %>%
     html_attr("src")
 
-  js_urls
+  career_url = js_urls[str_detect(js_urls, pattern = "Career")]
+  player_url = js_urls[str_detect(js_urls, pattern = paste0(name, "(?!Career)"))]
+
+  #requesting response from server
+  #uses httr2 package
+  server_response <- httr2::request(career_url) %>%
+    httr2::req_perform()
+
+  #checking if URL exists. If the server throws a 404 error, then the webpage could not be found
+  if (httr2::resp_status(server_response) == 404) {
+    stop("Player or player data does not exist on Tennis Abstract. Make sure that the player's name is formatted as FirstLast in quotation marks")
+  }
+
+  career_data = readLines(career_url)
+  player_data = readLines(player_url)
+
+  l = list(C = career_data, P = player_data)
+
+  l
 
 }
