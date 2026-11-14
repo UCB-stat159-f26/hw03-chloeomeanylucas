@@ -13,11 +13,9 @@ library(stringr)
 
 
 getmensoppsages = function (name){
-  js_urls = getcareerdatafromweb(name)
+  data_list = getcareerdatafromweb(name)
 
-  career_url = js_urls[str_detect(js_urls, pattern = "Career")]
-
-  career_data = readLines(career_url)
+  career_data = data_list$C
 
   #extracts the ages of the opponents as a list. If there is no match, an item will be
   #coded as character(0) (empty string)

@@ -13,11 +13,9 @@ library(stringr)
 library(lubridate)
 
 getwomensoppsbdays = function (name){
-  js_urls = getcareerdatafromweb(name)
+  data_list = getcareerdatafromweb(name)
 
-  career_url = js_urls[str_detect(js_urls, pattern = "Career")]
-
-  career_data = readLines(career_url)
+  career_data = data_list$C
 
   #this includes only the date of the match and opponents' birthdays
   all_dates = str_extract_all(career_data, pattern = "\\d{8}(?!\\-)")
