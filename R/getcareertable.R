@@ -12,10 +12,6 @@
 #' getcareertable(name)
 
 
-library(rvest)
-library(stringr)
-library(lubridate)
-
 #argument <name> is the full name of the player in the format: FirstLast
 
 getcareertable = function (name) {
@@ -28,7 +24,7 @@ getcareertable = function (name) {
   #Dates-----------------------------------------------------------------------
   #extracts the first occurrence of a number 8 digits long, which corresponds to
   #the date of the tennis match
-  date_of_match = str_extract(career_data, pattern = "\\d{8}")
+  date_of_match = stringr::str_extract(career_data, pattern = "\\d{8}")
 
   #removes NA values
   date_of_match = date_of_match[!is.na(date_of_match)]
@@ -37,7 +33,7 @@ getcareertable = function (name) {
   #Player's Birthday--------------------------------------------------------------
   #This extracts the player's birthday. It is a character vector of NA values and
   #one character value that corresponds to the player's birthday.
-  player_bday = str_extract(player_data, pattern = "(?<=dob=)[:digit:]{8}")
+  player_bday = stringr::str_extract(player_data, pattern = "(?<=dob=)[:digit:]{8}")
 
   #removes the NA values that come from str_extract()
   player_bday = player_bday[!is.na(player_bday)]
@@ -45,7 +41,7 @@ getcareertable = function (name) {
   #Male or Female Player--------------------------------------------------------
   #this checks if the player is a man by checking if the player's career data has
   #ages instead of birthdays for their opponents
-  if (length(str_view(career_data, pattern = "[:digit:]{2}\\.[:digit:]+")) != 0){
+  if (length(stringr::str_view(career_data, pattern = "[:digit:]{2}\\.[:digit:]+")) != 0){
     #output of getmensoppsages() is a list
     opp_ages = getmensoppsages(name)$OppAges
     unincluded_index = getmensoppsages(name)$Indices
@@ -59,8 +55,8 @@ getcareertable = function (name) {
     if (length(unincluded_index) != 0){ #making sure unincluded_index is NOT empty
      date_of_match = date_of_match[-unincluded_index] #Removing the dates that correspond to the opponents with missing birthdays
     }
-    opp_age_intervals = interval(ymd(opp_bdays), ymd(date_of_match))
-    opp_ages = time_length(opp_age_intervals, "year")
+    opp_age_intervals = lubridate::interval(ymd(opp_bdays), ymd(date_of_match))
+    opp_ages = lubridate::time_length(opp_age_intervals, "year")
   }
   #in the above if-else statement, the variable unincluded_index is tracked so that I can
   #remove the opponents that did not have an age or birthday in the data in further
@@ -71,11 +67,11 @@ getcareertable = function (name) {
   #interval() from the package lubridate returns an array of UTC formatted intervals
   #where one value looks like: YYYY-MM-DD UTC--YYYY-MM-DD UTC
   #they are "doubles"
-  player_age_intervals = interval(ymd(player_bday), ymd(date_of_match))
+  player_age_intervals = lubridate::interval(ymd(player_bday), ymd(date_of_match))
 
   #time_length() calculates the length of time between a player's birthday and
   #the match date in units of "years"
-  player_ages = time_length(player_age_intervals, "year")
+  player_ages = lubridate::time_length(player_age_intervals, "year")
 
   #difference in ages relative to player's age on the date of the match
   age_diff = player_ages - opp_ages
@@ -84,7 +80,7 @@ getcareertable = function (name) {
   #Outcomes-----------------------------------------------------------------------
   #In order to find if the player won or not, str_extract detects the first occurrence of
   #a W or L wrapped in quotation marks. A "W" for "won" and "L" for "lost."
-  outcomes = str_extract(career_data, pattern = '(?<=\")(W|L)(?=\")')
+  outcomes = stringr::str_extract(career_data, pattern = '(?<=\")(W|L)(?=\")')
 
   #removes NA values
   outcomes = outcomes[!is.na(outcomes)]
