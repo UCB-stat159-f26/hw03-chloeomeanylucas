@@ -18,9 +18,13 @@ their career.
 This package contains two main functions: `getcareertable()` and
 `getcareerplot()`
 
-`getcareertable()`
+`getcareertable(name)`
+
+- Argument `name` is the tennis player’s name in the format FirstLast in
+  quotation marks.
 
 - A data frame containing five columns:
+
   - “Date”
   - “Player_Age”
   - “Opponent_Age”
@@ -30,7 +34,13 @@ This package contains two main functions: `getcareertable()` and
 *for more information, see `getcareertable_DICTIONARY.txt` in /R/
 folder*
 
-`getcareertable()`
+`getcareerplot(table, name = "PlayerName")`
+
+- Argument `name` is optional and is the tennis player’s name in the
+  format FirstLast in quotation marks. By default, it will show use
+  “PlayerName” to display on the plot
+
+- Argument `table` is the table from getcareertable()
 
 - A scatter plot of all matches a professional tennis player has won or
   lost in their career, and their age relative to their opponents each

@@ -25,8 +25,10 @@ This package contains two main functions: `getcareertable()` and `getcareerplot(
 
 
 `
-getcareertable()
+getcareertable(name)
 `
+
+- Argument `name` is the tennis player's name in the format FirstLast in quotation marks.
 
 - A data frame containing five columns:
     - "Date"
@@ -39,8 +41,12 @@ getcareertable()
 
 
 `
-getcareertable()
+getcareerplot(table, name = "PlayerName")
 `
+
+- Argument `name` is optional and is the tennis player's name in the format FirstLast in quotation marks. By default, it will show use "PlayerName" to display on the plot
+
+- Argument `table` is the table from getcareertable()
 
 - A scatter plot of all matches a professional tennis player has won or lost in their career, and their age relative to their opponents each match. The layout of the plot is directly influenced by the one created for Serena Williams in the New York Times article ["Serena Williams Dominated Her Generation, Then the Next One, Too."](https://www.nytimes.com/interactive/2022/08/28/sports/tennis/serena-age-opponents.html) by Leo Dominguez and Sara Ziegler.
 
