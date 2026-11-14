@@ -8,9 +8,6 @@
 #' name = "RodLaver"
 #' getmensoppsages(name)
 
-library(rvest)
-library(stringr)
-
 
 getmensoppsages = function (name){
   data_list = getcareerdatafromweb(name)
@@ -19,7 +16,7 @@ getmensoppsages = function (name){
 
   #extracts the ages of the opponents as a list. If there is no match, an item will be
   #coded as character(0) (empty string)
-  all_opp_ages = str_extract_all(career_data, pattern = "[:digit:]{2}\\.[:digit:]+")
+  all_opp_ages = stringr::str_extract_all(career_data, pattern = "[:digit:]{2}\\.[:digit:]+")
 
   opp_ages = c()
   unincluded_index = c()
