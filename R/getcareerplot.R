@@ -20,13 +20,11 @@
 #' getcareerplot(laver_tbl)
 
 
-
-library(ggplot2)
-library(stringr)
-
 getcareerplot = function (table, name = "PlayerName"){
-  first_name = unlist(str_split(name, "(?<=[a-z])(?=[A-Z])"))[1]
-  last_name = unlist(str_split(name, "(?<=[a-z])(?=[A-Z])"))[2]
+  library(ggplot2)
+
+  first_name = unlist(stringr::str_split(name, "(?<=[a-z])(?=[A-Z])"))[1]
+  last_name = unlist(stringr::str_split(name, "(?<=[a-z])(?=[A-Z])"))[2]
 
   plot = ggplot(data = table, mapping = aes(x = Player_Age, y = Age_Difference, color = Player_Outcome))+
   geom_point(size = 0.7) +
