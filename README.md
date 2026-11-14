@@ -49,6 +49,16 @@ folder*
     |   |── getcareerplot.R                   # main function
     |   |── getmensoppsages.R                 # auxiliary function
     |   |── getwomensoppsbdays.R              # auxiliary function
+    |── man/                                  # metadata for the main and auxiliary functions
+    |   |── getcareerdatafromweb.Rd
+    |   |── getcareertable.Rd
+    |   |── getcareerplot.Rd
+    |   |── getmensoppsages.Rd
+    |   |── getwomensoppsbdays.Rd
+    |── tests/
+    |   |── testthat/
+    |       |── test-getcareertable.R
+    |   |── testthat.R
     |── .Rbuildignore
     |── .gitignore
     |── DESCRIPTION                           # package metadata
@@ -104,8 +114,49 @@ pak::pak("UCB-stat159-f26/hw03-chloeomeanylucas")
 
 ## Example
 
-Below are examples of how to use the main functions, as well as what the
-auxiliary functions do: <!-- #endregion -->
+Below are examples of what to run to use the main functions and
+(optional) auxiliary functions do:
+
+``` r
+devtools::load_all()
+#testing with a female tennis player
+williams_tbl = getcareertable("SerenaWilliams")
+williams_tbl
+williams_plt = getcareerplot(williams_tbl)
+```
+
+``` r
+#testing with a male tennis player
+laver_tbl = getcareertable("RodLaver")
+laver_tbl
+laver_plt = getcareerplot(laver_tbl)
+laver_plt
+```
+
+``` r
+#testing with a non-existent tennis player
+smith_tbl = getcareertable("JohnSmith")
+smith_tbl
+smith_plt = getcareerplot(smith_tbl)
+smith_plt
+```
+
+``` r
+#testing auxiliary function
+getcareerdatafromweb("SerenaWilliams")
+```
+
+``` r
+#testing auxilary function
+getmensoppsages("RodLaver")
+```
+
+``` r
+#testing auxiliary function
+getwomensoppsbdays("SerenaWilliams")
+```
+
+<!-- #endregion -->
 
 ## Special Considerations
 
