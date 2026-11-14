@@ -11,25 +11,23 @@
 #' name = "RodLaver"
 #' getcareerdatafromweb(name)
 
-library(rvest)
-library(stringr)
-
 getcareerdatafromweb = function (name) {
   url = paste0("https://www.tennisabstract.com/cgi-bin/wplayer-classic.cgi?p=", name, "&f=ACareerqq")
 
-  html_webpage = read_html(url)
+  html_webpage = rvest::read_html(url)
 
   #searching for the "src" url in <script></script>
   js_urls = html_webpage %>%
-    html_elements("script[src]") %>%
-    html_attr("src")
+    rvest::html_elements("script[src]") %>%
+    rvest::html_attr("src")
 
-  career_url = js_urls[str_detect(js_urls, pattern = "Career")]
-  player_url = js_urls[str_detect(js_urls, pattern = paste0(name, "(?!Career)"))]
+  career_url = js_urls[stringr::str_detect(js_urls, pattern = "Career")]
+  player_url = js_urls[stringr::str_detect(js_urls, pattern = paste0(name, "(?!Career)"))]
 
-  #requesting response from server
+  #requesting response from server, making sure error does not stop call to server
   #uses httr2 package
   server_response <- httr2::request(career_url) %>%
+    httr2::req_error(is_error = function(resp) FALSE) %>%
     httr2::req_perform()
 
   #checking if URL exists. If the server throws a 404 error, then the webpage could not be found
